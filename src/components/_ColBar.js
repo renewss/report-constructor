@@ -14,17 +14,29 @@ class Colbar extends React.Component {
         <Rect
           key={0}
           bar="Column"
-          parentBtn={
-            <BtnBottom
-              parentCall={this.addChildHandler}
-              className="btn-right"
-            />
-          }
+          // parentBtn={
+          //   <BtnBottom
+          //     parentCall={this.addChildHandler}
+          //     className="btn-right"
+          //   />
+          // }
         />,
       ],
     };
   }
   render() {
+    // // Setting blank area height according to colbar
+    // const root = document.documentElement;
+    // const colbar = document.querySelector(".col-bar");
+    // console.log(colbar);
+    // if (!!colbar)
+    //   root.style.setProperty(
+    //     "--screen-blank-height",
+    //     window.getComputedStyle(colbar).height
+    //   );
+
+    // console.log(root.style.getPropertyValue("--screen-blank-height"));
+
     return <div className="col-bar">{this.state.children}</div>;
   }
 

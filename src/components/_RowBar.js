@@ -10,12 +10,12 @@ export default class RowBar extends React.Component {
       children: [
         <Rect
           key={0}
-          parentBtn={
-            <BtnBottom
-              parentCall={this.addChildHandler}
-              className="btn-right"
-            />
-          }
+          // parentBtn={
+          //   <BtnBottom
+          //     parentCall={this.addChildHandler}
+          //     className="btn-right"
+          //   />
+          // }
         />,
       ],
     };

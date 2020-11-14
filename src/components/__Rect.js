@@ -7,6 +7,7 @@ export default class Rect extends React.Component {
 
     this.state = {
       isBtnClicked: false,
+      hasContent: false,
       children: [],
     };
   }
@@ -53,6 +54,8 @@ export default class Rect extends React.Component {
     e.preventDefault();
   };
   dropHandle = (e) => {
+    // if (this.state.hasContent) return;
+
     e.preventDefault();
     const btnId = e.dataTransfer.getData("btn-id");
 
@@ -60,6 +63,7 @@ export default class Rect extends React.Component {
     btn.style.display = "block";
 
     e.target.appendChild(btn);
+    this.setState({ hasContent: true });
   };
 }
 
