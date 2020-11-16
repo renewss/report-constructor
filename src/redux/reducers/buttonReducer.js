@@ -1,4 +1,4 @@
-import * as actionTypes from "../actionTypes";
+import * as actionTypes from "../actionTypes/btnActionTypes";
 
 export default function btnReducer(state = [], action) {
   switch (action.type) {

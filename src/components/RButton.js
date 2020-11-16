@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addBtn, moveBtnStart, moveBtnEnd } from "../redux/actions";
+import { addBtn, moveBtnStart, moveBtnEnd } from "../redux/actions/btnActions";
 
 class RButton extends React.Component {
   constructor() {

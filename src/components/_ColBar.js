@@ -3,17 +3,20 @@ import Rect from "./__Rect";
 import BtnBottom from "./___BtnBottom";
 
 import { connect } from "react-redux";
-import { addBtn } from "../redux/actions";
+import { addColRect } from "../redux/actions/colRectActions";
 
 class Colbar extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
+    this.props = props;
 
     this.state = {
       children: [
         <Rect
           key={0}
           bar="Column"
+          level={1}
+          count={0}
           // parentBtn={
           //   <BtnBottom
           //     parentCall={this.addChildHandler}
@@ -24,6 +27,15 @@ class Colbar extends React.Component {
       ],
     };
   }
+
+  componentDidMount() {
+    this.props.addColRect({
+      parent: { level: 0, count: 0 },
+      content: null,
+      children: [],
+    });
+  }
+
   render() {
     // // Setting blank area height according to colbar
     // const root = document.documentElement;
@@ -60,11 +72,11 @@ class Colbar extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  btns: state.btns,
+  colRects: { ...state.colRects },
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addBtn: (payload) => dispatch(addBtn(payload)),
+  addColRect: (payload) => dispatch(addColRect(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Colbar);

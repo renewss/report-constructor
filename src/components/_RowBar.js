@@ -2,7 +2,10 @@ import React from "react";
 import Rect from "./__Rect";
 import BtnBottom from "./___BtnBottom";
 
-export default class RowBar extends React.Component {
+import { connect } from "react-redux";
+import { addRowRect } from "../redux/actions/rowRectActions";
+
+class RowBar extends React.Component {
   constructor() {
     super();
 
@@ -10,6 +13,9 @@ export default class RowBar extends React.Component {
       children: [
         <Rect
           key={0}
+          bar="Row"
+          level={1}
+          count={0}
           // parentBtn={
           //   <BtnBottom
           //     parentCall={this.addChildHandler}
@@ -19,6 +25,14 @@ export default class RowBar extends React.Component {
         />,
       ],
     };
+  }
+
+  componentDidMount() {
+    this.props.addColRect({
+      parent: { level: 0, count: 0 },
+      content: null,
+      children: [],
+    });
   }
 
   render() {
@@ -42,3 +56,13 @@ export default class RowBar extends React.Component {
     });
   };
 }
+
+const mapStateToProps = (state) => ({
+  rowRects: { ...state.rowRects },
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addColRect: (payload) => dispatch(addRowRect(payload)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(RowBar);

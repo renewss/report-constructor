@@ -1,9 +1,14 @@
 import React from "react";
 import BtnBottom from "./___BtnBottom";
 
-export default class Rect extends React.Component {
-  constructor() {
+import { connect } from "react-redux";
+import { addColRect } from "../redux/actions/colRectActions";
+import { addRowRect } from "../redux/actions/rowRectActions";
+
+class Rect extends React.Component {
+  constructor(props) {
     super();
+    this.props = props;
 
     this.state = {
       isBtnClicked: false,
@@ -16,6 +21,8 @@ export default class Rect extends React.Component {
     return (
       <div
         className="rectangle"
+        level={this.props.level}
+        count={this.props.count}
         onDragOver={this.dragOverHandle}
         onDrop={this.dropHandle}
       >
@@ -67,12 +74,15 @@ export default class Rect extends React.Component {
   };
 }
 
-// const mapStateToProps = (state) => ({
-//   btns: [...state.btns],
-// });
+const mapStateToProps = (state) => ({
+  btns: [...state.btns],
+  colRects: { ...state.colRects },
+  rowRects: { ...state.rowRects },
+});
 
-// const mapDispatchToProps = (dispatch) => ({
-//   moveBtnEnd: (payload) => dispatch(moveBtnEnd(payload)),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  addColRect: (payload) => dispatch(addColRect(payload)),
+  addRowRect: (payload) => dispatch(addRowRect(payload)),
+});
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Rect);
+export default connect(mapStateToProps, mapDispatchToProps)(Rect);

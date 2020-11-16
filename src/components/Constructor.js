@@ -5,7 +5,7 @@ import data from "../data";
 import traverserHead from "../utils/traverser";
 
 import { connect } from "react-redux";
-import { addBtn } from "../redux/actions";
+import { addBtn } from "../redux/actions/btnActions";
 
 class Constructor extends React.Component {
   constructor() {
@@ -23,9 +23,9 @@ class Constructor extends React.Component {
   }
 
   componentDidMount() {
-    this.state.btns.forEach((el) => {
-      this.props.addBtn(el);
-    });
+    // this.state.btns.forEach((el) => {
+    //   this.props.addBtn(el);
+    // });
   }
 
   render() {
