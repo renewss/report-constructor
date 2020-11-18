@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addBtn, moveBtnStart, moveBtnEnd } from "../redux/actions/btnActions";
+import { moveBtnStart, moveBtnEnd } from "../redux/actions/btnActions";
 
 class RButton extends React.Component {
   constructor() {
@@ -23,9 +23,8 @@ class RButton extends React.Component {
         className={this.state.place === "Params" ? "btn" : "btn-clicked"}
         draggable={true}
         onDragStart={this.dragStartHandle}
-        onDragOver={this.dragOverHandle}
+        onDragOver={this.dragOverHandle} // prevents from dropping card into card
         onDragEnd={this.dragEndHandle}
-        variant="contained"
       >
         {this.props.label}
       </button>
@@ -54,10 +53,11 @@ class RButton extends React.Component {
 }
 
 //
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  btns: [...state.btns],
+});
 
 const mapDispatchToProps = (dispatch) => ({
-  addBtn: (payload) => dispatch(addBtn(payload)),
   moveBtnStart: (payload) => dispatch(moveBtnStart(payload)),
   moveBtnEnd: (payload) => dispatch(moveBtnEnd(payload)),
 });

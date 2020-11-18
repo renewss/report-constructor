@@ -16,7 +16,10 @@ export default function rectReducer(state = [], action) {
 }
 
 function traverser(state, payload) {
-  if (state.id.level === payload.parent.level) {
+  if (
+    state.id.level === payload.parent.level &&
+    state.id.count === payload.parent.count
+  ) {
     state.children.push(payload);
   } else if (!!state.children.length) {
     state.children = state.children.map((el) => {

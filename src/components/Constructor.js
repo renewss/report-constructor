@@ -23,9 +23,9 @@ class Constructor extends React.Component {
   }
 
   componentDidMount() {
-    // this.state.btns.forEach((el) => {
-    //   this.props.addBtn(el);
-    // });
+    this.state.btns.forEach((el) => {
+      this.props.addBtn(el);
+    });
   }
 
   render() {

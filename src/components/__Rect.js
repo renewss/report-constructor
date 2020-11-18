@@ -21,8 +21,6 @@ class Rect extends React.Component {
     return (
       <div
         className="rectangle"
-        level={this.props.level}
-        count={this.props.count}
         onDragOver={this.dragOverHandle}
         onDrop={this.dropHandle}
       >
@@ -40,12 +38,18 @@ class Rect extends React.Component {
   //
 
   addChildHandler = () => {
+    // Updateing state
     this.setState({
       isBtnClicked: true,
       children: [
         ...this.state.children,
         <Rect
           bar={this.props.bar}
+          level={this.props.level + 1}
+          count={this.state.children.length}
+          key={`${this.props.level + 1}-${this.state.children.length}`}
+          addColRect={this.props.addColRect}
+          addRowRect={this.props.addRowRect}
           parentBtn={
             <BtnBottom
               parentCall={this.addChildHandler}
@@ -55,6 +59,23 @@ class Rect extends React.Component {
         />,
       ],
     });
+
+    // Adding to redux state
+    if (this.props.bar === "Column") {
+      this.props.addColRect({
+        parent: { level: this.props.level, count: this.props.count },
+        content: null,
+        children: [],
+        id: { level: this.props.level + 1, count: this.state.children.length },
+      });
+    } else {
+      this.props.addRowRect({
+        parent: { level: this.props.level, count: this.props.count },
+        content: null,
+        children: [],
+        id: { level: this.props.level + 1, count: this.state.children.length },
+      });
+    }
   };
 
   dragOverHandle = (e) => {
