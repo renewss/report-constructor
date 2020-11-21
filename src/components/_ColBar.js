@@ -16,6 +16,7 @@ class Colbar extends React.Component {
           bar="Column"
           level={1}
           count={0}
+
           // parentBtn={
           //   <BtnBottom
           //     parentCall={this.addChildHandler}

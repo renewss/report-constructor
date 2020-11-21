@@ -3,7 +3,6 @@ import * as actionTypes from "../actionTypes/colRectActionTypes";
 export default function rectReducer(state = {}, action) {
   switch (action.type) {
     case actionTypes.COL_RECT_ADD:
-      console.log(`Col Red ${action.payload.parent.level}`);
       return !!Object.keys(state).length
         ? traverser(state, action.payload)
         : action.payload;

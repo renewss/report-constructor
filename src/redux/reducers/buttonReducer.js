@@ -12,14 +12,29 @@ export default function btnReducer(state = [], action) {
         return el;
       });
 
-    case actionTypes.BTN_MOVE_END: {
+    case actionTypes.BTN_MOVE_END:
       return state.map((el) => {
         if (el.id === action.payload.id)
-          return { ...el, isMoving: false, place: action.payload.place };
+          return {
+            ...el,
+            isMoving: false,
+          };
 
         return el;
       });
-    }
+
+    case actionTypes.BTN_DROP:
+      return state.map((el) => {
+        if (el.id === action.payload.id)
+          return {
+            ...el,
+            parent: action.payload.parent,
+            location: action.payload.location,
+            isMoving: false,
+          };
+
+        return el;
+      });
 
     default:
       return state;

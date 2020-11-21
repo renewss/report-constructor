@@ -8,23 +8,14 @@ import { connect } from "react-redux";
 import { addBtn } from "../redux/actions/btnActions";
 
 class Constructor extends React.Component {
-  constructor() {
-    super();
-
-    // data.forEach((el) => {
-    //   store.dispatch(addBtn({ ...el, place: "Params" }));
-    // });
-
-    this.state = {
-      btns: data.map((el) => {
-        return { ...el, place: "Params", isMoving: false };
-      }),
-    };
-  }
-
   componentDidMount() {
-    this.state.btns.forEach((el) => {
-      this.props.addBtn(el);
+    data.forEach((el) => {
+      this.props.addBtn({
+        id: el.id,
+        label: el.label,
+        parent: "Params",
+        location: { level: null, count: null },
+      });
     });
   }
 

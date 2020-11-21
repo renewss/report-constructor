@@ -30,7 +30,7 @@ class Params extends React.Component {
         onDrop={this.dropHandle}
       >
         {store.getState().btns.map((el, i) => {
-          if (el.place === "Params")
+          if (el.parent === "Params")
             return (
               <RButton id={el.id} label={el.label} parent="Params" key={i} />
             );
@@ -55,7 +55,7 @@ class Params extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  ...state,
+  btns: { ...state.btns },
 });
 
 export default connect(mapStateToProps)(Params);

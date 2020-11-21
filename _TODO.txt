@@ -1,2 +1,2 @@
-problem - Rect component - cannot send redux 'add' function to children, 
-todo - send 'add' function to children as a function
+rework react -> redux Rect content and hasContent props
+fix Params drop( copy from Rect)

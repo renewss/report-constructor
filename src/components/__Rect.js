@@ -1,9 +1,11 @@
 import React from "react";
 import BtnBottom from "./___BtnBottom";
+import RButton from "./RButton";
 
 import { connect } from "react-redux";
 import { addColRect } from "../redux/actions/colRectActions";
 import { addRowRect } from "../redux/actions/rowRectActions";
+import { dropBtn } from "../redux/actions/btnActions";
 
 class Rect extends React.Component {
   constructor(props) {
@@ -30,6 +32,25 @@ class Rect extends React.Component {
         ) : (
           ""
         )}
+
+        {this.props.btns.map((el) => {
+          // checking redux store for RButton elements that have location of current rect
+          if (el.parent === this.props.bar)
+            if (
+              el.location.level === this.props.level &&
+              el.location.count === this.props.count
+            )
+              return (
+                <RButton
+                  id={el.id}
+                  label={el.label}
+                  parent={this.props.bar}
+                  key={el.id}
+                />
+              );
+
+          return "";
+        })}
         {this.state.children}
       </div>
     );
@@ -43,13 +64,14 @@ class Rect extends React.Component {
       isBtnClicked: true,
       children: [
         ...this.state.children,
-        <Rect
+        <ConenctedRect
           bar={this.props.bar}
           level={this.props.level + 1}
           count={this.state.children.length}
           key={`${this.props.level + 1}-${this.state.children.length}`}
-          addColRect={this.props.addColRect}
-          addRowRect={this.props.addRowRect}
+          // btns={this.props.btns}
+          // addColRect={this.props.addColRect}
+          // addRowRect={this.props.addRowRect}
           parentBtn={
             <BtnBottom
               parentCall={this.addChildHandler}
@@ -61,37 +83,37 @@ class Rect extends React.Component {
     });
 
     // Adding to redux state
-    if (this.props.bar === "Column") {
-      this.props.addColRect({
-        parent: { level: this.props.level, count: this.props.count },
-        content: null,
-        children: [],
-        id: { level: this.props.level + 1, count: this.state.children.length },
-      });
-    } else {
-      this.props.addRowRect({
-        parent: { level: this.props.level, count: this.props.count },
-        content: null,
-        children: [],
-        id: { level: this.props.level + 1, count: this.state.children.length },
-      });
-    }
+    let addRect;
+    if (this.props.bar === "Column") addRect = this.props.addColRect;
+    else addRect = this.props.addRowRect;
+
+    addRect({
+      parent: { level: this.props.level, count: this.props.count },
+      content: null,
+      children: [],
+      id: { level: this.props.level + 1, count: this.state.children.length },
+    });
   };
 
   dragOverHandle = (e) => {
+    if (this.state.hasContent) return;
     e.preventDefault();
   };
   dropHandle = (e) => {
-    // if (this.state.hasContent) return;
-
+    if (this.state.hasContent) return;
     e.preventDefault();
-    const btnId = e.dataTransfer.getData("btn-id");
+    e.stopPropagation();
 
-    const btn = document.getElementById(btnId);
-    btn.style.display = "block";
+    const btn = this.props.btns.filter((el) => el.isMoving)[0]; // find moving button
+    this.props.dropBtn({
+      id: btn.id,
+      parent: this.props.bar,
+      location: { level: this.props.level, count: this.props.count },
+    });
 
-    e.target.appendChild(btn);
     this.setState({ hasContent: true });
+
+    document.getElementById(btn.id).style.display = "block";
   };
 }
 
@@ -104,6 +126,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   addColRect: (payload) => dispatch(addColRect(payload)),
   addRowRect: (payload) => dispatch(addRowRect(payload)),
+  dropBtn: (payload) => dispatch(dropBtn(payload)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Rect);
+const ConenctedRect = connect(mapStateToProps, mapDispatchToProps)(Rect);
+export default ConenctedRect;

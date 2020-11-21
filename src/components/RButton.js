@@ -9,9 +9,9 @@ class RButton extends React.Component {
   }
   componentDidMount() {
     this.setState({
-      id: this.props["btn-id"],
+      id: this.props.id,
       label: this.props.label,
-      place: this.props.parent,
+      parent: this.props.parent,
       isMoving: false,
     });
   }
@@ -20,7 +20,7 @@ class RButton extends React.Component {
     return (
       <button
         id={this.props.id}
-        className={this.state.place === "Params" ? "btn" : "btn-clicked"}
+        className={this.state.parent === "Params" ? "btn" : "btn-clicked"}
         draggable={true}
         onDragStart={this.dragStartHandle}
         onDragOver={this.dragOverHandle} // prevents from dropping card into card
@@ -32,12 +32,12 @@ class RButton extends React.Component {
   }
 
   dragStartHandle = (e) => {
-    const target = e.target;
-
-    e.dataTransfer.setData("btn-id", target.id);
+    // const target = e.target;
+    // e.dataTransfer.setData("btn-id", target.id);
+    this.props.moveBtnStart({ id: this.state.id });
 
     setTimeout(() => {
-      target.style.display = "none";
+      e.target.style.display = "none";
     }, 0);
   };
 
@@ -46,7 +46,9 @@ class RButton extends React.Component {
   };
 
   dragEndHandle = (e) => {
+    console.log(1);
     setTimeout(() => {
+      this.props.moveBtnEnd({ id: this.state.id });
       e.target.style.display = "block";
     }, 0);
   };
